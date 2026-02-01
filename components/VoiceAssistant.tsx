@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GoogleGenAI, LiveServerMessage, Modality, Type, FunctionDeclaration } from '@google/genai';
 import { useVoice } from '../context/VoiceContext';
+import { getEnv } from '../utils/env';
 
 // --- Audio Helper Functions (Encoding/Decoding) ---
 
@@ -156,7 +157,7 @@ export const VoiceAssistant = () => {
     try {
       setStatus('connecting');
       // Create new client for every session to avoid stale state
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const ai = new GoogleGenAI({ apiKey: getEnv('API_KEY') });
       
       // Initialize Audio Contexts
       inputContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 16000 });
